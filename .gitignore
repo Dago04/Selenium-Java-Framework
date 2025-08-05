@@ -1,0 +1,65 @@
+###############################################################################
+# ➜  JAVA + MAVEN
+###############################################################################
+# Salida de compilación
+target/
+
+# Informes de pruebas (TestNG, Surefire/Failsafe)
+surefire-reports/
+failsafe-reports/
+test-output/
+*.log
+
+# Maven Wrapper (❗ sí conviene versionar el wrapper)
+.mvn/wrapper/maven-wrapper.jar        #  INCLUIR
+!/.mvn/wrapper/maven-wrapper.jar      #  Niega la regla anterior para asegurarlo
+.mvn/wrapper/maven-wrapper.properties
+mvnw
+mvnw.cmd
+
+###############################################################################
+# ➜  IDEs
+###############################################################################
+# Eclipse
+.project
+.classpath
+.settings/
+bin/
+.factorypath
+
+# IntelliJ IDEA
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+
+# VS Code
+.vscode/
+
+###############################################################################
+# ➜  WebDriverManager (si lo configuras para descargar en el proyecto)
+#     Por defecto usa tu carpeta de usuario, pero a veces se cambia la ruta.
+###############################################################################
+.wdm/
+.webdrivers/
+drivers/
+
+###############################################################################
+# ➜  Archivos temporales del SO / editores
+###############################################################################
+# Windows
+Thumbs.db
+desktop.ini
+
+# macOS
+.DS_Store
+
+# Linux
+*~
+
+# Archivos swap / backups de editores (Vim, VS Code, etc.)
+*.swp
+*.swo
+*.bak
+*.tmp
