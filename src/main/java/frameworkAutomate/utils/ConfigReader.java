@@ -17,6 +17,11 @@ public class ConfigReader {
 	public static String get(String key) {
 		return prop.getProperty(key);
 	}
+	
+	 /** Devuelve el valor o el default dado si la clave falta. */
+    public static String get(String key, String defaultVal) {
+        return prop.getProperty(key, defaultVal);
+    }
 
 	public static int getInt(String key, int defaultVal) {
 	    String raw = prop.getProperty(key);

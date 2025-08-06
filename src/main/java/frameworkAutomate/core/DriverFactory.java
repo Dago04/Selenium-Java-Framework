@@ -1,70 +1,80 @@
 package frameworkAutomate.core;
 
-import java.time.Duration;
-
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-
 import frameworkAutomate.utils.ConfigReader;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
+
+import java.time.Duration;
 
 /**
- * Crea y cierra una ÚNICA instancia WebDriver para el hilo principal. No
- * contempla ejecución paralela.
+ * Crea y cierra UNA única instancia de WebDriver.
+ * No contempla ejecución paralela.
  */
 public class DriverFactory {
 
-	private static WebDriver driver; // Instancia única del WebDriver
+    private static WebDriver driver;   // instancia única
 
-	/**
-	 * Devuelve la instancia del WebDriver. Si no existe, crea una nueva instancia.
-	 * 
-	 * @return WebDriver
-	 */
-	public static WebDriver getDriver() {
-		if (driver == null)
-			driver = createDriver();
-		return driver;
-	}
+    /** Devuelve la instancia si existe; si no, la crea. */
+    public static WebDriver getDriver() {
+        if (driver == null) driver = createDriver();
+        return driver;
+    }
 
-	/** Cierra la instancia actual y la pone a null. */
-	public static void quitDriver() {
-		if (driver != null) {
-			driver.quit();
-			driver = null;
-		}
-	}
+    /** Cierra la instancia y la “borra”. */
+    public static void quitDriver() {
+        if (driver != null) {
+            driver.quit();
+            driver = null;
+        }
+    }
 
-	/* ----------- método privado ----------- */
-	private static WebDriver createDriver() {
-		String browser = ConfigReader.get("browser");
-		int implicit = ConfigReader.getInt("implici.timeout",5);
+    /* ---------------- PRIVADO ---------------- */
+    private static WebDriver createDriver() {
 
-		WebDriver drv;
+    	String browser = ConfigReader.get("browser");
+        int implicitSec = ConfigReader.getInt("implicit.timeout", 5);
 
-		switch (browser) {
-		case "firefox" -> {
-			// Configura el WebDriver de Firefox con WebDriverManager
-			WebDriverManager.firefoxdriver().setup();
-			drv = new FirefoxDriver();
-		}
-		case "edge" -> {
-			// Configura el WebDriver de Edge con WebDriverManager
-			WebDriverManager.edgedriver().setup();
-			drv = new EdgeDriver();
-		}
-		default -> {
-			// chrome por defecto
-			WebDriverManager.chromedriver().setup();
-			drv = new ChromeDriver();
-		}
+       
+        boolean headlessCfg = Boolean.parseBoolean(ConfigReader.get("headless", "false"));
+        boolean headless    = headlessCfg || "true".equalsIgnoreCase(System.getenv("CI"));
 
-		}
-		drv.manage().timeouts().implicitlyWait(Duration.ofSeconds(implicit));
-		drv.manage().window().maximize();
-		return drv;
-	}
+        WebDriver drv;
 
+        switch (browser) {
+            case "firefox" -> {
+                WebDriverManager.firefoxdriver().setup();
+                FirefoxOptions fOpts = new FirefoxOptions();
+                if (headless) fOpts.addArguments("-headless");
+                drv = new FirefoxDriver(fOpts);
+            }
+            case "edge" -> {
+                WebDriverManager.edgedriver().setup();
+                drv = new EdgeDriver();                
+            }
+            default -> { // chrome
+                WebDriverManager.chromedriver().setup();
+                ChromeOptions cOpts = new ChromeOptions();
+
+                if (headless) {
+                    cOpts.addArguments("--headless=new",
+                                       "--no-sandbox",
+                                       "--disable-dev-shm-usage");
+                }
+              
+
+                drv = new ChromeDriver(cOpts);
+            }
+        }
+
+        drv.manage().timeouts()
+           .implicitlyWait(Duration.ofSeconds(implicitSec));
+        drv.manage().window().setSize(new Dimension(1920, 1080));
+        return drv;
+    }
 }

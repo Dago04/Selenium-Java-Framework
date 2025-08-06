@@ -63,6 +63,7 @@ public class ExtentTestListener implements ITestListener {
 
 	/* ---------- utilidades ---------- */
 
+	// Este método toma una captura de pantalla y la guarda en el directorio de reportes
 	private String takeScreenshot(String method) throws Exception {
 		File src = ((TakesScreenshot) DriverFactory.getDriver()).getScreenshotAs(OutputType.FILE);
 
