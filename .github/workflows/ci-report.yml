@@ -6,43 +6,38 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: read           # checkout
+  pages: write             # publicar
+  id-token: write          # OIDC para Pages
 
 jobs:
-  build-test:
+  build-and-deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages   # coincide con Settings ▸ Pages
+      url:  ${{ steps.deploy.outputs.page_url }}
 
     steps:
+    # 1) Código
     - uses: actions/checkout@v4
 
+    # 2) JDK
     - uses: actions/setup-java@v4
       with:
         distribution: temurin
         java-version: '21'
 
+    # 3) Tests (genera reports/)
     - name: Run Maven tests
-      run: mvn -B test             # o ./mvnw -B test si tienes wrapper
+      run: mvn -B test      # o ./mvnw -B test
 
-    # ─── sube el artefacto ──────────────────────────────
+    # 4) Empaquetar carpeta reports/  ➜ OUTPUT = artifact_id interno
     - name: Upload Pages artifact
-      id: upload
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-pages-artifact@v4
       with:
-        path: reports/             # <-- tu carpeta ExtentReports
-    #   el step expone:  ${{ steps.upload.outputs.artifact_name }}
+        path: reports/      # tu carpeta ExtentReports
 
-  deploy:
-    needs: build-test
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-
-    steps:
+    # 5) Publicar a GitHub Pages
     - name: Deploy to GitHub Pages
-      id: deployment
-      uses: actions/deploy-pages@v2
-      with:
-        artifact_name: ${{ needs.build-test.outputs.artifact_name }}
+      id: deploy
+      uses: actions/deploy-pages@v4
