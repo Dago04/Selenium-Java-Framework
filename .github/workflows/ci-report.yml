@@ -1,0 +1,46 @@
+name: CI + Publish Extent Report
+
+on:
+  push:
+    branches: [main]        # ajusta tu rama principal
+  workflow_dispatch:        # permite lanzarlo manualmente
+
+permissions:
+  contents: read            # necesario para clonar
+  pages: write              # permiso para publicar
+  id-token: write           # OIDC – usado por deploy-pages
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v4
+
+    - name: Set up Temurin 21
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '21'
+
+    - name: Run Maven tests
+      run: mvn -B test
+
+    - name: Upload report as Pages artifact
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: reports        # carpeta generada por ExtentManager
+
+  deploy:
+    needs: build-test
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages    # coincide con la sección Pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v2        # publica el artefacto
+
