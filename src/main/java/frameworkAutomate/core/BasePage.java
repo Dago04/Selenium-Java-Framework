@@ -36,7 +36,7 @@ public abstract class BasePage {
 		return waits.visible(locator).getText();
 	}
 	
-	// Leer el título de la página actual
+	// Leer el título de la página actualAn
 	public String getTitle() {
 		return driver.getTitle();
 	}

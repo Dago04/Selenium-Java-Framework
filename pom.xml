@@ -34,6 +34,12 @@
       <version>7.11.0</version> <!-- 13-feb-2025 -->
       <scope>test</scope>
     </dependency>
+    
+    <dependency>
+  <groupId>com.aventstack</groupId>
+  <artifactId>extentreports</artifactId>
+  <version>5.1.1</version>
+</dependency>
   </dependencies>
   
    <build>

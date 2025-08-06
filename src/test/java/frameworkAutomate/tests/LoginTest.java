@@ -5,6 +5,7 @@ import org.testng.annotations.Test;
 
 import frameworkAutomate.pages.LoginPage;
 import frameworkAutomate.pages.SecureAreaPage;
+import frameworkAutomate.utils.ConfigReader;
 
 public class LoginTest extends BaseTest{
 	@Test
@@ -12,10 +13,10 @@ public class LoginTest extends BaseTest{
 		
 
 		LoginPage loginPage = new LoginPage(driver);
-		
+				
 		SecureAreaPage secure = new LoginPage(driver)
-				.writeUser("tomsmith")
-				.writePassword("SuperSecretPassword!")
+				.writeUser(ConfigReader.get("username"))
+				.writePassword(ConfigReader.get("password"))
 				.clickLogin();
 		
 		Assert.assertTrue(loginPage.getMessage().contains("You logged into a secure area!"), "The message is incorrect");

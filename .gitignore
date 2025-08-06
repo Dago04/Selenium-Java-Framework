@@ -63,3 +63,16 @@ desktop.ini
 *.swo
 *.bak
 *.tmp
+
+
+###############################################################################
+# ➜  REPORTES (ExtentReports 5)
+###############################################################################
+# Carpeta base de los reportes
+reports/
+
+# Si por alguna razón generas los HTML en otra carpeta, añade el patrón:
+# **/AutomationReport_*.html
+
+# Capturas automáticas (por defecto en reports/screenshots/)
+reports/screenshots/
