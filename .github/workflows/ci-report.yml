@@ -2,45 +2,47 @@ name: CI + Publish Extent Report
 
 on:
   push:
-    branches: [main]        # ajusta tu rama principal
-  workflow_dispatch:        # permite lanzarlo manualmente
+    branches: [main]
+  workflow_dispatch:
 
 permissions:
-  contents: read            # necesario para clonar
-  pages: write              # permiso para publicar
-  id-token: write           # OIDC – usado por deploy-pages
+  contents: read
+  pages: write
+  id-token: write
 
 jobs:
   build-test:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repo
-      uses: actions/checkout@v4
+    - uses: actions/checkout@v4
 
-    - name: Set up Temurin 21
-      uses: actions/setup-java@v4
+    - uses: actions/setup-java@v4
       with:
-        distribution: 'temurin'
+        distribution: temurin
         java-version: '21'
 
     - name: Run Maven tests
-      run: mvn -B test
+      run: mvn -B test             # o ./mvnw -B test si tienes wrapper
 
-    - name: Upload report as Pages artifact
-      uses: actions/upload-pages-artifact@v3
+    # ─── sube el artefacto ──────────────────────────────
+    - name: Upload Pages artifact
+      id: upload
+      uses: actions/upload-pages-artifact@v2
       with:
-        path: reports        # carpeta generada por ExtentManager
+        path: reports/             # <-- tu carpeta ExtentReports
+    #   el step expone:  ${{ steps.upload.outputs.artifact_name }}
 
   deploy:
     needs: build-test
     runs-on: ubuntu-latest
     environment:
-      name: github-pages    # coincide con la sección Pages
+      name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
     - name: Deploy to GitHub Pages
       id: deployment
-      uses: actions/deploy-pages@v2        # publica el artefacto
-
+      uses: actions/deploy-pages@v2
+      with:
+        artifact_name: ${{ needs.build-test.outputs.artifact_name }}
