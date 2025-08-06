@@ -13,12 +13,12 @@ public class ConfigReader {
 		}
 	}
 
-	/* ---------- Métodos de acceso ---------- */
+	/* ---------- Access methods ---------- */
 	public static String get(String key) {
 		return prop.getProperty(key);
 	}
 	
-	 /** Devuelve el valor o el default dado si la clave falta. */
+	 /** Returns the value or the given default if the key is missing. */
     public static String get(String key, String defaultVal) {
         return prop.getProperty(key, defaultVal);
     }

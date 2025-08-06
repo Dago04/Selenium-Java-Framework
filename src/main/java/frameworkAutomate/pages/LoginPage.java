@@ -6,6 +6,7 @@ import frameworkAutomate.core.BasePage;
 
 public class LoginPage extends BasePage {
 
+	protected WebDriver driver;
 	/* Locators */
 	private final By userTxt = By.id("username");
 	private final By passTxt = By.id("password");
