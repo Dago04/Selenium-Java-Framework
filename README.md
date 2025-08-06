@@ -5,8 +5,8 @@ Tras clonar el proyecto, basta ejecutar:
 
 ```
 # clona el repositorio
-git clone https://github.com/<tu-usuario>/<tu-repo>.git
-cd <repositorio>
+git clone https://github.com/Dago04/Selenium-Java-Framework.git
+cd Selenium-Java-Framework
 
 # compila y lanza la suite completa
 mvn test
