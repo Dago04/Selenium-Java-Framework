@@ -25,7 +25,7 @@ jobs:
         java-version: '21'
 
     - name: Run Maven tests
-      run: ./mvnw -B test
+      run: mvn -B test
 
     - name: Upload report as Pages artifact
       uses: actions/upload-pages-artifact@v3
