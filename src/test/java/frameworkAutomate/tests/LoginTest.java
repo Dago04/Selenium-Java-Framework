@@ -1,10 +1,10 @@
-package tests;
-
-import pages.LoginPage;
-import pages.SecureAreaPage;
+package frameworkAutomate.tests;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import frameworkAutomate.pages.LoginPage;
+import frameworkAutomate.pages.SecureAreaPage;
 
 public class LoginTest extends BaseTest{
 	@Test

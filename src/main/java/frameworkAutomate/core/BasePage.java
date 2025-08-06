@@ -1,4 +1,4 @@
-package pages;
+package frameworkAutomate.core;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
