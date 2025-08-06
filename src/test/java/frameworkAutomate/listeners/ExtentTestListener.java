@@ -13,30 +13,30 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 
 /**
- * Listener TestNG que genera un reporte ExtentReports con capturas automáticas
- * en caso de fallo.
+ * TestNG listener that generates an ExtentReports report with automatic
+ * screenshots in case of failure.
  */
 
 public class ExtentTestListener implements ITestListener {
 
 	private final ExtentReports extent = ExtentManager.getExtent();
-	private ExtentTest test; // una referencia por ejecución de método
+	private ExtentTest test; // one reference per method execution
 
 	/* ---------- TestNG hooks ---------- */
 
-	// Este método se ejecuta al iniciar todos los tests
+	// This method is executed at the start of all tests
 	@Override
 	public void onTestStart(ITestResult result) {
 		test = extent.createTest(result.getMethod().getMethodName());
 	}
 
-	// Este método se ejecuta al ser la prueba exitosa
+	// This method is executed when the test is successful
 	@Override
 	public void onTestSuccess(ITestResult result) {
 		test.pass("Test passed");
 	}
 
-	// Este método se ejecuta al fallar el test
+	// This method is executed when the test fails
 	@Override
 	public void onTestFailure(ITestResult result) {
 		test.fail(result.getThrowable());
@@ -45,25 +45,25 @@ public class ExtentTestListener implements ITestListener {
 			String path = takeScreenshot(result.getMethod().getMethodName());
 			test.addScreenCaptureFromPath(path);
 		} catch (Exception e) {
-			test.warning("No se pudo adjuntar captura: " + e.getMessage());
+			test.warning("Could not attach screenshot: " + e.getMessage());
 		}
 	}
 
-	// Este método se ejecuta al skippear un test
+	// This method is executed when a test is skipped
 	@Override
 	public void onTestSkipped(ITestResult result) {
-		test.skip("Prueba saltada");
+		test.skip("Test skipped");
 	}
-	
-	// Este método se ejecuta al finalizar un test
+
+	// This method is executed at the end of a test
 	@Override
 	public void onFinish(ITestContext context) {
-		extent.flush(); // escribe el HTML final
+		extent.flush(); // writes the final HTML
 	}
 
-	/* ---------- utilidades ---------- */
+	/* ---------- utilities ---------- */
 
-	// Este método toma una captura de pantalla y la guarda en el directorio de reportes
+	// This method takes a screenshot and saves it in the reports directory
 	private String takeScreenshot(String method) throws Exception {
 		File src = ((TakesScreenshot) DriverFactory.getDriver()).getScreenshotAs(OutputType.FILE);
 

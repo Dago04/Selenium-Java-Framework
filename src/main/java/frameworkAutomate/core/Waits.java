@@ -5,8 +5,6 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.*;
 import java.time.Duration;
 
-
-/** API simple sobre WebDriverWait para evitar código repetido. */
 public class Waits {
 	
 	private final WebDriver driver;
@@ -18,7 +16,7 @@ public class Waits {
 		this.wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
 	}
 	
-	  /* ---------- helpers más comunes ---------- */
+	  /* ---------- Common Helpers ---------- */
 	public WebElement visible(By locator) {
 		return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
 	}

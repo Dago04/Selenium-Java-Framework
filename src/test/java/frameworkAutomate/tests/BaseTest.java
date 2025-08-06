@@ -11,8 +11,10 @@ public class BaseTest {
 
 	protected WebDriver driver;
 
-	// Configura el WebDriver de acuerdo al navegador especificado en el archivo de configuración
-
+	/**
+	 * Base class for all tests. It initializes the WebDriver and opens the base URL before each test.
+	 * It also ensures that the WebDriver is closed after each test.
+	 */
 	@BeforeMethod
 	public void setup() {
 		driver = DriverFactory.getDriver();

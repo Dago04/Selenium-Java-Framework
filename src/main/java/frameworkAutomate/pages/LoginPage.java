@@ -7,19 +7,19 @@ import frameworkAutomate.core.BasePage;
 public class LoginPage extends BasePage {
 
 	/* Locators */
-    private final By userTxt  = By.id("username");
-    private final By passTxt  = By.id("password");
-    private final By loginBtn = By.cssSelector("button[type='submit']");
-    private final By flashLbl = By.id("flash");
+	private final By userTxt = By.id("username");
+	private final By passTxt = By.id("password");
+	private final By loginBtn = By.cssSelector("button[type='submit']");
+	private final By flashLbl = By.id("flash");
 
 	public LoginPage(WebDriver driver) {
 		super(driver);
 	}
 
-    public LoginPage writeUser(String user) {
-        write(userTxt, user);
-        return this;
-    }
+	public LoginPage writeUser(String user) {
+		write(userTxt, user);
+		return this;
+	}
 
 	public LoginPage writePassword(String password) {
 		write(passTxt, password);
