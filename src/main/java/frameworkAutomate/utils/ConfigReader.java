@@ -18,8 +18,9 @@ public class ConfigReader {
 		return prop.getProperty(key);
 	}
 
-	public static int getInt(String key) {
-		return Integer.parseInt(get(key));
+	public static int getInt(String key, int defaultVal) {
+	    String raw = prop.getProperty(key);
+	    return raw == null ? defaultVal : Integer.parseInt(raw);
 	}
 	
 	public static long getLong(String key) {

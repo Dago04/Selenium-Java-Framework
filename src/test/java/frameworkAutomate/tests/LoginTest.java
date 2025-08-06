@@ -10,9 +10,7 @@ public class LoginTest extends BaseTest{
 	@Test
 	public void loginSuccess() throws InterruptedException {
 		
-		// arranque
-		driver.get("https://the-internet.herokuapp.com/login");
-	
+
 		LoginPage loginPage = new LoginPage(driver);
 		
 		SecureAreaPage secure = new LoginPage(driver)

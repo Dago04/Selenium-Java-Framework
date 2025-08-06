@@ -40,7 +40,7 @@ public class DriverFactory {
 	/* ----------- método privado ----------- */
 	private static WebDriver createDriver() {
 		String browser = ConfigReader.get("browser");
-		int implicit = ConfigReader.getInt("implici.timeout");
+		int implicit = ConfigReader.getInt("implici.timeout",5);
 
 		WebDriver drv;
 
