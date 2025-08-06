@@ -1,5 +1,6 @@
 package frameworkAutomate.pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -8,36 +9,32 @@ import frameworkAutomate.core.BasePage;
 
 public class LoginPage extends BasePage {
 
-	@FindBy(id = "username")
-	private WebElement txtUser;
-	@FindBy(id = "password")
-	private WebElement txtPassword;
-	@FindBy(css = "button[type='submit']")
-	private WebElement btnLogin;
-	@FindBy(id = "flash")
-	private WebElement lblFlash;
+	/* Locators */
+    private final By userTxt  = By.id("username");
+    private final By passTxt  = By.id("password");
+    private final By loginBtn = By.cssSelector("button[type='submit']");
+    private final By flashLbl = By.id("flash");
 
 	public LoginPage(WebDriver driver) {
 		super(driver);
 	}
 
-	public LoginPage enterUsername(String username) {
-		txtUser.sendKeys(username);
+    public LoginPage writeUser(String user) {
+        write(userTxt, user);
+        return this;
+    }
+
+	public LoginPage writePassword(String password) {
+		write(passTxt, password);
 		return this;
 	}
 
-	public LoginPage enterPassword(String password) {
-		txtPassword.sendKeys(password);
-		return this;
-	}
-
-	public SecureAreaPage clickLoginExitoso() {
-		btnLogin.click();
+	public SecureAreaPage clickLogin() {
+		click(loginBtn);
 		return new SecureAreaPage(driver);
 	}
 
 	public String getMessage() {
-		return lblFlash.getText();
-		
+		return read(flashLbl);
 	}
 }

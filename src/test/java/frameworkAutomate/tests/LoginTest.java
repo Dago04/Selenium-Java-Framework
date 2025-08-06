@@ -14,12 +14,10 @@ public class LoginTest extends BaseTest{
 		LoginPage loginPage = new LoginPage(driver);
 		
 		SecureAreaPage secure = new LoginPage(driver)
-				.enterUsername("tomsmith")
-				.enterPassword("SuperSecretPassword!")
-				.clickLoginExitoso();
+				.writeUser("tomsmith")
+				.writePassword("SuperSecretPassword!")
+				.clickLogin();
 		
-		
-		Thread.sleep(2000); // Espera para ver el resultado (no recomendado en producción)
-		Assert.assertTrue(loginPage.getMessage().contains("You logged into a secure area!"), "El título no es correcto");
+		Assert.assertTrue(loginPage.getMessage().contains("You logged into a secure area!"), "The message is incorrect");
 	}
 }
