@@ -33,7 +33,7 @@ jobs:
 
     # 4) Empaquetar carpeta reports/  ➜ OUTPUT = artifact_id interno
     - name: Upload Pages artifact
-      uses: actions/upload-pages-artifact@v4
+      uses: actions/upload-pages-artifact@v3
       with:
         path: reports/      # tu carpeta ExtentReports
 
