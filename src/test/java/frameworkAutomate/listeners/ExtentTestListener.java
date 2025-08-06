@@ -20,7 +20,11 @@ import java.nio.file.StandardCopyOption;
 public class ExtentTestListener implements ITestListener {
 
 	private final ExtentReports extent = ExtentManager.getExtent();
-	private ExtentTest test; // one reference per method execution
+	private static ExtentTest test; // one reference per method execution
+	
+	public static ExtentTest getTest() {
+		return test;
+	}
 
 	/* ---------- TestNG hooks ---------- */
 
