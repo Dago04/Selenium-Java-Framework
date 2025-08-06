@@ -29,13 +29,7 @@ jobs:
 
     # 3) Tests (genera reports/)
     - name: Run Maven tests
-      run: mvn -B test      # o ./mvnw -B test
-     
-    - name: Make latest report the index
-      run: |
-        LATEST=$(ls -t reports/AutomationReport_*.html | head -n1)
-        cp "$LATEST" reports/index.html
-      
+      run: mvn -B test      # o ./mvnw -B test   
 
     # 4) Empaquetar carpeta reports/  ➜ OUTPUT = artifact_id interno
     - name: Upload Pages artifact
