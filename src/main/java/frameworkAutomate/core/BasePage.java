@@ -37,7 +37,7 @@ public abstract class BasePage {
 	}
 
 	// Read the title of the current page
-	public String getTitle() {
-		return driver.getTitle();
+	public String getCurrentUrl() {
+		return driver.getCurrentUrl();
 	}
 }

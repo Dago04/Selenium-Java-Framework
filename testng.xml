@@ -5,9 +5,10 @@
 <listeners>
     <listener class-name="frameworkAutomate.listeners.ExtentTestListener"/>
   </listeners>
-  <test thread-count="5" name="Test">
+  <test thread-count="5" name="SmokeTests">
+   
     <classes>
-      <class name="frameworkAutomate.tests.LoginTest"/>
+      <class name="frameworkAutomate.tests.HomePageTest"/>
     </classes>
   </test> <!-- Test -->
 </suite> <!-- Suite -->
