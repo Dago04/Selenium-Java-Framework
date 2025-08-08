@@ -2,7 +2,6 @@ package frameworkAutomate.tests;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import org.testng.annotations.Listeners;
 import com.aventstack.extentreports.ExtentTest;
 import frameworkAutomate.listeners.ExtentTestListener;
 import frameworkAutomate.pages.HomePage;
