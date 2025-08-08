@@ -1,5 +1,7 @@
 package frameworkAutomate.core;
 
+import java.util.List;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -39,5 +41,10 @@ public abstract class BasePage {
 	// Read the title of the current page
 	public String getCurrentUrl() {
 		return driver.getCurrentUrl();
+	}
+	
+	// Return list of elements
+	public List<WebElement> getListOfElements(By locator){
+		return waits.visibleAll(locator);
 	}
 }

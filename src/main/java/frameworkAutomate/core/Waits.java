@@ -4,6 +4,7 @@ import frameworkAutomate.utils.ConfigReader;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.*;
 import java.time.Duration;
+import java.util.List;
 
 public class Waits {
 	
@@ -27,5 +28,9 @@ public class Waits {
 	
 	public boolean textPresent(By locator, String text) {
 		return wait.until(ExpectedConditions.textToBePresentInElementLocated(locator, text));
+	}
+	
+	public List<WebElement> visibleAll(By locator) {
+		return wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(locator));
 	}
 }

@@ -53,6 +53,13 @@
           <suiteXmlFiles>
             <suiteXmlFile>testng.xml</suiteXmlFile>
           </suiteXmlFiles>
+           <!-- Registro global del listener para ejecuciones por -Dtest -->
+		  <properties>
+		    <property>
+		      <name>listener</name>
+		      <value>frameworkAutomate.listeners.ExtentTestListener</value>
+		    </property>
+		  </properties>
         </configuration>
       </plugin>
     </plugins>
