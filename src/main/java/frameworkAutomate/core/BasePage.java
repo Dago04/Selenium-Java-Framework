@@ -34,29 +34,45 @@ public abstract class BasePage {
 	 * ============================ Navigation / State ============================
 	 */
 
-	// Navigate to the base URL defined in the configuration
+	/**
+	 * Performs the 'goTo' operation.
+	 *
+	 * @param url Parameter of type String.
+	 */
 	public void goTo(String url) {
 		driver.get(url);
 		waits.documentReady();
 	}
 
-	// Get the url of the current page
+	/**
+	 * Returns the current browser URL.
+	 * 
+	 * @return The result of type String.
+	 */
 	public String getCurrentUrl() {
 		return driver.getCurrentUrl();
 	}
 
-	// Get the title of the current page
+	/**
+	 * Returns the current document title.
+	 * 
+	 * @return The result of type String.
+	 */
 	public String getTitle() {
 		return driver.getTitle();
 	}
 
-	// Refresh the current page and wait for it to load
+	/**
+	 * Refreshes the page and waits for it to be fully loaded.
+	 */
 	public void refreshAndWait() {
 		driver.navigate().refresh();
 		waits.documentReady();
 	}
 
-	// Navigate back to the previous page and wait for it to load
+	/**
+	 * Navigates back and waits for the page to be fully loaded.
+	 */
 	public void backAndWait() {
 		driver.navigate().back();
 		waits.documentReady();
@@ -64,26 +80,45 @@ public abstract class BasePage {
 
 	/* ============================ Finders ============================ */
 
-	/** Find an element waiting for it to be visible */
-	protected WebElement find(By locator) {
+	/**
+	 * Find an element waiting for it to be visible in the DOM
+	 *
+	 * @param locator The locator to find the element.
+	 * @return The found WebElement.
+	 */
+	public WebElement find(By locator) {
 		return waits.visible(locator);
 	}
 
 	/**
-	 * Find an element waiting for it to be visible in the DOM(no necesary visible)
+	 * Find an element waiting for it to be present in the DOM (without requiring
+	 * visibility).
+	 *
+	 * @param locator The locator to find the element.
+	 * @return The found WebElement.
 	 */
-	protected WebElement findPresent(By locator) {
+	public WebElement findPresent(By locator) {
 		return waits.present(locator);
 	}
 
 	/**
-	 * Find a list of elements waiting for them to be visible
+	 * Find a list of elements waiting for them to be visible in the DOM
+	 *
+	 * @param locator The locator to find the elements.
+	 * @return The list of found WebElements.
 	 */
+
 	public List<WebElement> getListOfElements(By locator) {
 		return waits.visibleAll(locator);
 	}
 
-	/** Present list of elements (without requiring visibility). */
+	/**
+	 * Find a list of elements waiting for them to be present in the DOM(without
+	 * requiring visibility).
+	 * 
+	 * @param locator The locator to find the elements.
+	 * @return The list of found WebElements.
+	 */
 	public List<WebElement> getAll(By locator) {
 		return waits.presenceOfAll(locator);
 	}
@@ -93,8 +128,8 @@ public abstract class BasePage {
 	 */
 
 	/**
-	 * Resilient click: wait for it to be clickable, center in the viewport, retry,
-	 * and fall back to JS if necessary.
+	 * Click an element waiting for it to be clickable, scrolls into view, and
+	 * clicks.
 	 */
 	public void click(By locator) {
 		withRetry(() -> {
@@ -121,6 +156,12 @@ public abstract class BasePage {
 		});
 	}
 
+	/**
+	 * Selects an option in a <select> by its visible text.
+	 *
+	 * @param locator Parameter of type By.
+	 * @param value   Parameter of type String.
+	 */
 	public void selectByVisibleText(By locator, String value) {
 		withRetry(() -> {
 			Select select = new Select(waits.visible(locator));
@@ -128,6 +169,13 @@ public abstract class BasePage {
 			return null;
 		});
 	}
+
+	/**
+	 * Selects an option in a <select> by its value.
+	 *
+	 * @param locator Parameter of type By.
+	 * @param value   Parameter of type String.
+	 */
 
 	public void selectByValue(By locator, String value) {
 		withRetry(() -> {
@@ -137,6 +185,12 @@ public abstract class BasePage {
 		});
 	}
 
+	/**
+	 * Selects an option in a <select> by its index.
+	 *
+	 * @param locator Parameter of type By.
+	 * @param index   Parameter of type int.
+	 */
 	public void selectByIndex(By locator, int index) {
 		withRetry(() -> {
 			Select select = new Select(waits.visible(locator));
@@ -163,7 +217,12 @@ public abstract class BasePage {
 	 * ============================
 	 */
 
-	/** Read text from an element located */
+	/**
+	 * Reads the text of an element waiting for it to be visible.
+	 *
+	 * @param locator Parameter of type By.
+	 * @return The text of the element as a String.
+	 */
 	public String read(By locator) {
 		return waits.visible(locator).getText().trim();
 	}
@@ -173,7 +232,12 @@ public abstract class BasePage {
 	 * ============================
 	 */
 
-	/* Return true if the element is displayed, false otherwise */
+	/**
+	 * Return true if the element is displayed, false otherwise.
+	 * 
+	 * @param locator Parameter of type By.
+	 * @return The result of type boolean.
+	 */
 	public boolean isDisplayed(By locator) {
 		try {
 			return waits.visible(locator).isDisplayed();
@@ -182,7 +246,12 @@ public abstract class BasePage {
 		}
 	}
 
-	/** Return true if the element is enabled, false otherwise */
+	/**
+	 * Return true if the element is enabled, false otherwise.
+	 * 
+	 * @param locator Parameter of type By.
+	 * @return The result of type boolean.
+	 */
 	public boolean isEnabled(By locator) {
 		try {
 			return waits.visible(locator).isEnabled();
@@ -191,7 +260,12 @@ public abstract class BasePage {
 		}
 	}
 
-	/** Return true if the element is selected, false otherwise */
+	/**
+	 * Return true if the element is selected (for checkboxes/radio buttons),
+	 * 
+	 * @param locator Parameter of type By.
+	 * @return The result of type boolean.
+	 */
 	public boolean isSelected(By locator) {
 		try {
 			return waits.visible(locator).isSelected();
@@ -201,26 +275,72 @@ public abstract class BasePage {
 	}
 
 	/*
-	 * ============================ Page waits/URL
-	 * ============================
+	 * ============================ Page waits/URL ============================
 	 */
 
-	public void waitForUrlContains(String fragment) {
-		waits.urlContains(fragment);
+	/**
+	 * Return true if the current URL contains the specified fragment, false
+	 * 
+	 * @param locator Parameter of type By.
+	 * @return The result of type boolean.
+	 */
+	public boolean waitForUrlContains(String fragment) {
+		try {
+			return waits.urlContains(fragment);
+		} catch (NoSuchElementException e) {
+			return false; // If the URL is not found, return false
+		}
 	}
 
-	public void waitForUrlToBe(String url) {
-		waits.urlToBe(url);
+	/**
+	 * Return true if the current URL is exactly the specified URL, false
+	 * 
+	 * @param locator Parameter of type By.
+	 * @return The result of type boolean.
+	 */
+	public boolean waitForUrlToBe(String url) {
+		try {
+			return waits.urlToBe(url);
+		} catch (NoSuchElementException e) {
+			return false; // If the URL is not found, return false
+		}
+
 	}
 
-	public void waitForTitleContains(String text) {
-		waits.titleContains(text);
+	/**
+	 * Return true if the page title contains the specified text, false
+	 * 
+	 * @param locator Parameter of type By.
+	 * @return The result of type boolean.
+	 */
+	public boolean waitForTitleContains(String text) {
+		try {
+			return waits.titleContains(text);
+		} catch (NoSuchElementException e) {
+			return false; // If the title is not found, return false
+		}
 	}
 
-	public void waitForInvisibility(By locator) {
-		waits.invisible(locator);
+	/**
+	 * Return true if the page title is exactly the specified text, false
+	 * 
+	 * @param locator Parameter of type By.
+	 * @return The result of type boolean.
+	 */
+	public boolean waitForTitle(String text) {
+		try {
+			return waits.titleIs(text);
+		} catch (NoSuchElementException e) {
+			return false; // If the title is not found, return false
+		}
 	}
 
+	/**
+	 * Return true if an alert is present, false otherwise.
+	 * 
+	 * @param locator Parameter of type By.
+	 * @return The result of type boolean.
+	 */
 	public Alert waitForAlert() {
 		return waits.alertIsPresent();
 	}
@@ -252,6 +372,14 @@ public abstract class BasePage {
 	}
 
 	/* ============================ Infra: Retries ============================ */
+
+	/**
+	 * Return the result of a supplier action with retries for specific exceptions.
+	 * 
+	 * @param action A Supplier that returns a result of type T.
+	 * @return The result of type T.
+	 */
+
 	protected <T> T withRetry(Supplier<T> action) {
 		RuntimeException last = null;
 		for (int i = 0; i < 3; i++) {
