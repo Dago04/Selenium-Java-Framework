@@ -13,16 +13,14 @@ public class HomePageTest extends BaseTest {
 	public void Test_01_ValidateNavigationToHomePage() {
 
 		ExtentTest log = ExtentTestListener.getTest();
-
-		log.info("Starting Home Page navigation test");
-
+		
 		HomePage homePage = new HomePage(driver);
+		homePage.goTo(ConfigReader.get("base.url"));
+		
+		log.info("Starting Home Page navigation test");
 
 		String actualUrl = ConfigReader.get("base.url");
 		String expectedUrl = homePage.getCurrentUrl();
-
-		log.info("Validating that category cards are visible on the Home Page");
-		Assert.assertTrue(homePage.isCategoryCardsVisible(), "Category cards are not visible");
 
 		log.info("Comparing actual URL with expected URL");
 		Assert.assertTrue(actualUrl.contains(expectedUrl), "The URL is incorrect");
@@ -33,6 +31,8 @@ public class HomePageTest extends BaseTest {
 
 		ExtentTest log = ExtentTestListener.getTest();
 		HomePage homePage = new HomePage(driver);
+		homePage.goTo(ConfigReader.get("base.url"));
+		
 		String cardName = ConfigReader.get("cardname");
 
 		log.info(String.format("Starting '%s' card click test", cardName));

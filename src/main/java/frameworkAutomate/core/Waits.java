@@ -45,7 +45,7 @@ public class Waits {
         return wait.until(condition);
     }
 
-	/* ---------- Basci waits ---------- */
+	/* ---------- Basic waits ---------- */
 	public WebElement visible(By locator) {
 		return until(ExpectedConditions.visibilityOfElementLocated(locator));
 	}

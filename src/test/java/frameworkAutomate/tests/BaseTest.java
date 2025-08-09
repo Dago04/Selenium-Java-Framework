@@ -5,7 +5,6 @@ import org.openqa.selenium.WebDriver;
 import org.testng.annotations.*;
 
 import frameworkAutomate.core.DriverFactory;
-import frameworkAutomate.utils.ConfigReader;
 
 public class BaseTest {
 
@@ -18,7 +17,7 @@ public class BaseTest {
 	@BeforeMethod
 	public void setup() {
 		driver = DriverFactory.getDriver();
-		driver.get(ConfigReader.get("base.url"));
+		//driver.get(ConfigReader.get("base.url"));
 	}
 
 	@AfterMethod
