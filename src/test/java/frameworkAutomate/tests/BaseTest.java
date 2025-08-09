@@ -6,6 +6,7 @@ import org.testng.annotations.*;
 
 import frameworkAutomate.core.DriverFactory;
 
+@Listeners({ frameworkAutomate.listeners.ExtentTestListener.class })
 public class BaseTest {
 
 	protected WebDriver driver;

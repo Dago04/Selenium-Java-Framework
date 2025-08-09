@@ -2,10 +2,18 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite name="Suite">
 
-  <test thread-count="5" name="SmokeTests">
-   
+ <listeners>
+    <listener class-name="frameworkAutomate.listeners.ExtentTestListener"/>
+  </listeners>
+  <test name="HomeTests" thread-count="5">
     <classes>
       <class name="frameworkAutomate.tests.HomePageTest"/>
     </classes>
-  </test> <!-- Test -->
-</suite> <!-- Suite -->
+  </test>
+  
+  <test name="RegisterTests" thread-count="5">
+    <classes>
+      <class name="frameworkAutomate.tests.RegisterPageTest"/>
+    </classes>
+  </test>
+</suite>
